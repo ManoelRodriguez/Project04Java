@@ -21,6 +21,36 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
               integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <style>
+            #featured-content {
+                background-color: #add8e6;
+                padding: 20px 0px;
+            }
+
+            .container {
+                max-width: 960px;
+                margin:0 auto;
+            }
+
+            .col-sm-9{
+                width:100%;   
+                float:left;
+                background: #ffffff;
+            }
+
+            #border-radius {
+                border: 2px solid white;
+                border-radius: 25px;
+
+            }
+
+            #radio {
+                display: inline;
+                margin-left: 1em;
+
+            }
+
+        </style>
         <title>Projeto 04 -- Quiz</title>
     </head>
     <body>
@@ -56,21 +86,44 @@
             </div>
         </nav>
         <h1>Quiz</h1>
-        <div class="custom-control custom-radio">
-            <form action="home.jsp">
-                <% for (Question q : Quiz.getMathTest()) {%>
-                <h3><%= q.getPergunta()%>?</h3>
-                <%for (String alternativas : q.getAlternativas()) {%>
-                <input type="radio"
-                       name="<%= q.getPergunta()%>"
-                       value ="<%=alternativas%>"
-                       /> <%=alternativas%> <br>
-                <hr/>
-                <%}%>
-                <%}%>
+        <div id="featured-content">
 
-                <br> <input class="btn btn-dark" type="submit" name="RealizaTeste" value="Enviar"/>
-            </form>
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-9" id="border-radius"> 
+
+                        <div class="custom-control custom-radio" id="radio">
+
+                            <form action="home.jsp">
+
+                                <hr/>
+
+                                <% for (Question q : Quiz.getMathTest()) {%>
+
+                                <h3 style="background-color:#e5e5e5 "><%= q.getPergunta()%> ?</h3>
+                                <%for (String alternativas : q.getAlternativas()) {%>
+
+
+                                <input
+                                    type="radio"
+                                    id="radio"
+                                    name="<%= q.getPergunta()%>"
+                                    value ="<%=alternativas%>" /> <%=alternativas%> <br>
+                                <%}%>
+                                <%}%>
+
+                                <hr/>
+
+                                <br> <input class="btn btn-primary" type="submit" name="RealizaTeste" value="Enviar"/>
+                                <br>
+                                <br>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
         <footer>

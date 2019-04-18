@@ -52,17 +52,19 @@ public final class home_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("\n");
 
     double grade = 0.0;
-    int corretas = 0;
+    int nota = 0;
+    int somanota = 0;
     if (request.getParameter("RealizaTeste") != null) {
         for (Question q : Quiz.getMathTest()) {
             if (request.getParameter(q.getPergunta()) != null) {
                 String userPergunta = request.getParameter(q.getPergunta());
                 if (q.getResposta().equals(userPergunta)) {
-                    corretas++;
+                    nota++;
+                    somanota += nota;
                 }
             }
         }
-        grade = (double) corretas / (double) Quiz.getMathTest().size();
+        grade = (double) nota / (double) Quiz.getMathTest().size();
     }
 
       out.write("\n");
@@ -118,8 +120,12 @@ if (request.getParameter("RealizaTeste") == null) {
       out.write("                    <h2>Você acertou\n");
       out.write("                        <u> ");
       out.print((grade * 100));
-      out.write(" %</u> \n");
-      out.write("                        das questões.</h2>\n");
+      out.write("</u>\n");
+      out.write("                        % das questões.\n");
+      out.write("                        Nota: ");
+      out.print( nota);
+      out.write("\n");
+      out.write("                    </h2>\n");
       out.write("                    <h3><a href=\"teste.jsp\" style=\"color: #000000\">Realizar novamente o Quiz.</a></h3>\n");
       out.write("                    ");
 }
@@ -128,7 +134,7 @@ if (request.getParameter("RealizaTeste") == null) {
       out.write("                    <br>\n");
       out.write("                </div>\n");
       out.write("            </div>\n");
-      out.write("        </div>\n");
+      out.write("        </div\n");
       out.write("\n");
       out.write("\n");
       out.write("        <div class=\"container\">\n");
