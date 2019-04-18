@@ -3,6 +3,8 @@ package org.apache.jsp.pages;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.jsp.*;
+import br.com.fatecpg.project04.Quiz;
+import br.com.fatecpg.project04.Question;
 
 public final class teste_jsp extends org.apache.jasper.runtime.HttpJspBase
     implements org.apache.jasper.runtime.JspSourceDependent {
@@ -44,7 +46,10 @@ public final class teste_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("\n");
       out.write("\n");
       out.write("\n");
+      out.write("\n");
+      out.write("\n");
       out.write("<!DOCTYPE html>\n");
+      out.write("\n");
 
     String nome = (String) session.getAttribute("nome");
     if (nome == null) {
@@ -52,20 +57,15 @@ public final class teste_jsp extends org.apache.jasper.runtime.HttpJspBase
     }
 
       out.write("\n");
-      out.write("<html lang=\"pt-br\">\n");
       out.write("\n");
+      out.write("<html>\n");
       out.write("    <head>\n");
-      out.write("        <meta charset=\"UTF-8\">\n");
-      out.write("        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n");
-      out.write("        <meta http-equiv=\"X-UA-Compatible\" content=\"ie=edge\">\n");
-      out.write("        <link rel=\"stylesheet\" href=\"https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css\"\n");
-      out.write("              integrity=\"sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO\" crossorigin=\"anonymous\">\n");
-      out.write("        <title>Home</title>\n");
+      out.write("        <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n");
+      out.write("        <title>Projeto 04 -- Quiz</title>\n");
       out.write("    </head>\n");
-      out.write("\n");
       out.write("    <body>\n");
       out.write("        <nav class=\"navbar navbar-expand-lg navbar-dark bg-dark\">\n");
-      out.write("            <a class=\"navbar-brand\" href=\"#\">Teste Online</a>\n");
+      out.write("            <a class=\"navbar-brand\" href=\"home.jsp\">Teste Online</a>\n");
       out.write("            <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#conteudoNavbarSuportado\"\n");
       out.write("                    aria-controls=\"conteudoNavbarSuportado\" aria-expanded=\"false\" aria-label=\"Alterna navegação\">\n");
       out.write("                <span class=\"navbar-toggler-icon\"></span>\n");
@@ -74,26 +74,62 @@ public final class teste_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("            <div class=\"collapse navbar-collapse\" id=\"conteudoNavbarSuportado\">\n");
       out.write("                <ul class=\"navbar-nav mr-auto\">\n");
       out.write("                    <li class=\"nav-item active\">\n");
-      out.write("                        <a class=\"nav-link\" href=\"#\">Home <span class=\"sr-only\">(página atual)</span></a>\n");
+      out.write("                        <a class=\"nav-link\" href=\"home.jsp\">Home <span class=\"sr-only\">(página atual)</span></a>\n");
       out.write("                    </li>\n");
       out.write("                    <li class=\"nav-item\">\n");
-      out.write("                        <a class=\"nav-link\" href=\"#\">Realizar este</a>\n");
+      out.write("                        <a class=\"nav-link\" href=\"identificacao.jsp\">Realizar Teste</a>\n");
       out.write("                    </li>\n");
       out.write("                    <div id=\"usuario\" style=\"position: absolute; right: 10px;\">\n");
       out.write("                        <li class=\"nav-item dropdown\">\n");
       out.write("                            <a class=\"nav-link dropdown-toggle\" href=\"#\" id=\"navbarDropdown\" role=\"button\"\n");
       out.write("                               data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">\n");
-      out.write("                                Nome do Usuário\n");
+      out.write("                                ");
+      out.print(nome);
+      out.write("\n");
       out.write("                            </a>\n");
       out.write("                            <div class=\"dropdown-menu\" aria-labelledby=\"navbarDropdown\">\n");
       out.write("                                <a class=\"dropdown-item\" href=\"#\">Minhas Informações</a>\n");
       out.write("                                <a class=\"dropdown-item\" href=\"#\">Meus Testes</a>\n");
+      out.write("                                <a class=\"dropdown-item\" href=\"logout.jsp\">Sair</a>\n");
       out.write("                            </div>\n");
       out.write("                        </li>\n");
       out.write("                    </div>\n");
       out.write("                </ul>\n");
       out.write("            </div>\n");
       out.write("        </nav>\n");
+      out.write("        <h1>Quiz</h1>\n");
+      out.write("        <div class=\"custom-control custom-radio\">\n");
+      out.write("            <form action=\"home.jsp\">\n");
+      out.write("                ");
+ for (Question q : Quiz.getMathTest()) {
+      out.write("\n");
+      out.write("                <h3>");
+      out.print( q.getPergunta());
+      out.write("?</h3>\n");
+      out.write("                ");
+for (String alternativas : q.getAlternativas()) {
+      out.write("\n");
+      out.write("                <input type=\"radio\"\n");
+      out.write("                       name=\"");
+      out.print( q.getPergunta());
+      out.write("\"\n");
+      out.write("                       value =\"");
+      out.print(alternativas);
+      out.write("\"\n");
+      out.write("                       /> ");
+      out.print(alternativas);
+      out.write(" <br>\n");
+      out.write("                <hr/>\n");
+      out.write("                ");
+}
+      out.write("\n");
+      out.write("                ");
+}
+      out.write("\n");
+      out.write("\n");
+      out.write("                <br> <input class=\"btn btn-dark\" type=\"submit\" name=\"RealizaTeste\" value=\"Enviar\"/>\n");
+      out.write("            </form>\n");
+      out.write("        </div>\n");
       out.write("\n");
       out.write("        <footer>\n");
       out.write("\n");

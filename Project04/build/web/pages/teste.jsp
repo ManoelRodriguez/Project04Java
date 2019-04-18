@@ -1,28 +1,28 @@
 <%-- 
     Document   : teste
-    Created on : 17/04/2019, 09:34:30
-    Author     : Manoel Rodriguez
+    Created on : 16/04/2019, 22:04:47
+    Author     : Casa
 --%>
 
+<%@page import="br.com.fatecpg.project04.Quiz"%>
+<%@page import="br.com.fatecpg.project04.Question"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+
 <%
     String nome = (String) session.getAttribute("nome");
     if (nome == null) {
         response.sendRedirect("identificacao.jsp");
     }
 %>
-<html lang="pt-br">
 
+<html>
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
               integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-        <title>Teste Online</title>
+        <title>Projeto 04 -- Quiz</title>
     </head>
-
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <a class="navbar-brand" href="home.jsp">Teste Online</a>
@@ -39,7 +39,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="identificacao.jsp">Realizar Teste</a>
                     </li>
-                    <div id="usuario" style="position: absolute; right: 10px;">
+                    <div id="usuario" style="position: absolute; right: 70px;">
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -55,6 +55,23 @@
                 </ul>
             </div>
         </nav>
+        <h1>Quiz</h1>
+        <div class="custom-control custom-radio">
+            <form action="home.jsp">
+                <% for (Question q : Quiz.getMathTest()) {%>
+                <h3><%= q.getPergunta()%>?</h3>
+                <%for (String alternativas : q.getAlternativas()) {%>
+                <input type="radio"
+                       name="<%= q.getPergunta()%>"
+                       value ="<%=alternativas%>"
+                       /> <%=alternativas%> <br>
+                <hr/>
+                <%}%>
+                <%}%>
+
+                <br> <input class="btn btn-dark" type="submit" name="RealizaTeste" value="Enviar"/>
+            </form>
+        </div>
 
         <footer>
 

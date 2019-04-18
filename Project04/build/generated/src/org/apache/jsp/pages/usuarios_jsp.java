@@ -143,7 +143,6 @@ int id = BD.getUsuariosList().indexOf(u);
 }
       out.write("\n");
       out.write("        </table>\n");
-      out.write("        <h4><a href=\"teste.jsp\">Ralizar prova</a></h4>\n");
       out.write("    </center>\n");
       out.write("    <footer style=\"position: absolute; bottom: 0px; width: 100%\">\n");
       out.write("        <center>\n");
