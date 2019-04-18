@@ -87,6 +87,7 @@
                 </tr>
             <%}%>
         </table>
+        <h4><a href="teste.jsp">Ralizar prova</a></h4>
     </center>
     <footer style="position: absolute; bottom: 0px; width: 100%">
         <center>

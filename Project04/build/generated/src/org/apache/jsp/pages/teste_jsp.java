@@ -4,7 +4,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.jsp.*;
 
-public final class identificacao_jsp extends org.apache.jasper.runtime.HttpJspBase
+public final class teste_jsp extends org.apache.jasper.runtime.HttpJspBase
     implements org.apache.jasper.runtime.JspSourceDependent {
 
   private static final JspFactory _jspxFactory = JspFactory.getDefaultFactory();
@@ -45,6 +45,12 @@ public final class identificacao_jsp extends org.apache.jasper.runtime.HttpJspBa
       out.write("\n");
       out.write("\n");
       out.write("<!DOCTYPE html>\n");
+
+    String nome = (String) session.getAttribute("nome");
+    if (nome == null) {
+        response.sendRedirect("identificacao.jsp");
+    }
+
       out.write("\n");
       out.write("<html lang=\"pt-br\">\n");
       out.write("\n");
@@ -54,11 +60,10 @@ public final class identificacao_jsp extends org.apache.jasper.runtime.HttpJspBa
       out.write("        <meta http-equiv=\"X-UA-Compatible\" content=\"ie=edge\">\n");
       out.write("        <link rel=\"stylesheet\" href=\"https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css\"\n");
       out.write("              integrity=\"sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO\" crossorigin=\"anonymous\">\n");
-      out.write("        <title>Identificação</title>\n");
+      out.write("        <title>Home</title>\n");
       out.write("    </head>\n");
       out.write("\n");
       out.write("    <body>\n");
-      out.write("\n");
       out.write("        <nav class=\"navbar navbar-expand-lg navbar-dark bg-dark\">\n");
       out.write("            <a class=\"navbar-brand\" href=\"#\">Teste Online</a>\n");
       out.write("            <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#conteudoNavbarSuportado\"\n");
@@ -83,58 +88,34 @@ public final class identificacao_jsp extends org.apache.jasper.runtime.HttpJspBa
       out.write("                            <div class=\"dropdown-menu\" aria-labelledby=\"navbarDropdown\">\n");
       out.write("                                <a class=\"dropdown-item\" href=\"#\">Minhas Informações</a>\n");
       out.write("                                <a class=\"dropdown-item\" href=\"#\">Meus Testes</a>\n");
-      out.write("                                <a class=\"dropdown-item\" href=\"#\">Sair</a>\n");
       out.write("                            </div>\n");
       out.write("                        </li>\n");
       out.write("                    </div>\n");
       out.write("                </ul>\n");
       out.write("            </div>\n");
       out.write("        </nav>\n");
-      out.write("    <center>\n");
-      out.write("        <div id=\"identificacao\" style=\"width: 300px; height: 200px; margin-top: 100px;\">\n");
-      out.write("            <h4 style=\"margin-bottom: 40px\">Identificação de Usuário</h4>\n");
-      out.write("            <form action=\"identificacao.jsp\">\n");
-      out.write("                <input type=\"text\" name=\"nome\" placeholder=\"nome\" required class=\"form-control\" style=\"margin: 15px\">\n");
-      out.write("                <input type=\"text\" name=\"sobrenome\" placeholder=\"sobrenome\" required class=\"form-control\"\n");
-      out.write("                       style=\"margin: 15px\">\n");
-      out.write("                <input type=\"email\" name=\"email\" placeholder=\"E-mail\" required class=\"form-control\"\n");
-      out.write("                       style=\"margin: 15px\">\n");
-      out.write("                <button type=\"submit\" name=\"iniciar\" class=\"btn btn-primary\">Iniciar</button>\n");
-      out.write("            </form>\n");
-      out.write("        </div\n");
-      out.write("        ");
-
-            String nome = request.getParameter("nome");
-            String sobrenome = request.getParameter("sobrenome");
-            
-
-            if (nome != null && sobrenome != null && !nome.isEmpty() && !sobrenome.isEmpty()) {
-                session.setAttribute("nome", nome);
-                response.sendRedirect("teste.jsp");
-            }
-        
       out.write("\n");
-      out.write("    </center>\n");
-      out.write("    <footer style=\"position: absolute; bottom: 0px; width: 100%\">\n");
-      out.write("        <center>\n");
+      out.write("        <footer>\n");
+      out.write("\n");
       out.write("            <hr>\n");
       out.write("            <p style=\"text-align: center\"> <a href=\"https://github.com/ManoelRodriguez\">Manoel Victor</a> || <a\n");
       out.write("                    href=\"https://github.com/matheussmorais\">Matheus Morais</a></p>\n");
       out.write("\n");
-      out.write("        </center>\n");
+      out.write("            <script src=\"https://code.jquery.com/jquery-3.3.1.slim.min.js\"\n");
+      out.write("                    integrity=\"sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo\"\n");
+      out.write("                    crossorigin=\"anonymous\">\n");
+      out.write("            </script>\n");
+      out.write("            <script src=\"https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js\"\n");
+      out.write("                    integrity=\"sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49\"\n");
+      out.write("                    crossorigin=\"anonymous\">\n");
+      out.write("            </script>\n");
+      out.write("            <script src=\"https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js\"\n");
+      out.write("                    integrity=\"sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy\"\n");
+      out.write("                    crossorigin=\"anonymous\">\n");
+      out.write("            </script>\n");
+      out.write("        </footer>\n");
       out.write("\n");
-      out.write("        <script src=\"https://code.jquery.com/jquery-3.3.1.slim.min.js\"\n");
-      out.write("                integrity=\"sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo\" crossorigin=\"anonymous\">\n");
-      out.write("        </script>\n");
-      out.write("        <script src=\"https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js\"\n");
-      out.write("                integrity=\"sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49\" crossorigin=\"anonymous\">\n");
-      out.write("        </script>\n");
-      out.write("        <script src=\"https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js\"\n");
-      out.write("                integrity=\"sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy\" crossorigin=\"anonymous\">\n");
-      out.write("        </script>\n");
-      out.write("    </footer>\n");
-      out.write("</body>\n");
-      out.write("\n");
+      out.write("    </body>\n");
       out.write("</html>\n");
     } catch (Throwable t) {
       if (!(t instanceof SkipPageException)){
