@@ -10,6 +10,7 @@ public class Usuario {
     private String sobrenome;
     private String email;
     private int media;
+    private int nota;
 
     public String getNome() {
         return nome;
@@ -41,6 +42,14 @@ public class Usuario {
 
     public void setMedia(int media) {
         this.media = media;
+    }
+
+    public int getNota() {
+        return nota;
+    }
+
+    public void setNota(int nota) {
+        this.nota = nota;
     }
 
 }

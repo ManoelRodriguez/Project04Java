@@ -4,6 +4,8 @@
     Author     : Manoel Rodriguez
 --%>
 
+<%@page import="br.com.fatecpg.project04.BD"%>
+<%@page import="br.com.fatecpg.project04.Usuario"%>
 <%@page import="br.com.fatecpg.project04.Quiz"%>
 <%@page import="br.com.fatecpg.project04.Question"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -13,6 +15,7 @@
     double grade = 0.0;
     int nota = 0;
     int somanota = 0;
+
     if (request.getParameter("RealizaTeste") != null) {
         for (Question q : Quiz.getMathTest()) {
             if (request.getParameter(q.getPergunta()) != null) {
@@ -20,11 +23,30 @@
                 if (q.getResposta().equals(userPergunta)) {
                     nota++;
                     somanota += nota;
+
                 }
             }
         }
+
         grade = (double) nota / (double) Quiz.getMathTest().size();
+
     }
+
+    if (request.getParameter("RealizaTeste") != null) {
+        String nomeu = request.getParameter("nome");
+        String sobrenome = request.getParameter("sobrenome");
+        String email = request.getParameter("email");
+        Usuario novoUsuario = new Usuario();
+        novoUsuario.setNome(nomeu);
+        novoUsuario.setSobrenome(sobrenome);
+        novoUsuario.setEmail(email);
+        BD.getUsuariosList().add(novoUsuario);
+
+    }
+
+    String nome = (String) session.getAttribute("nome");
+
+
 %>
 <html lang="pt-br">
 
@@ -50,11 +72,26 @@
                     <li class="nav-item active">
                         <a class="nav-link" href="home.jsp">Home <span class="sr-only">(página atual)</span></a>
                     </li>
-                    <li class="nav-item" style="position: absolute; right: 10px;">
+                    <li class="nav-item">
                         <a class="nav-link" href="identificacao.jsp">Realizar Teste</a>
                     </li>
+                    <% if (nome != null) {%>
+                    <div id="usuario" style="position: absolute; right: 70px;">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <%=nome%>
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+                                <a class="dropdown-item" href="logout.jsp">Sair</a>
+                            </div>
+                        </li>
+                    </div>
+
                 </ul>
-            </div>
+            </div>  
+            <%}%>
         </nav>
         <div class="jumbotron" style="height: 350px; padding: 120px;">
             <div class="container">
@@ -101,30 +138,24 @@
                                 </tr>
                             </thead>
                             <tbody>
+
+                                <%for (Usuario u : BD.getUsuariosList()) {%>
                                 <tr>
-                                    <th scope="row">1</th>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>3</td>
+                                    <% int id = BD.getUsuariosList().indexOf(u);%>
+                                    <th scope="row"> <%=id + 1%> </th>
+                                    <td><%= u.getNome()%></td>
+                                    <td><%= u.getSobrenome()%></td>
+                                    <td><%= nota%></td>
                                 </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                    <td>8</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">3</th>
-                                    <td>Larry</td>
-                                    <td>the Bird</td>
-                                    <td>6,8</td>
-                                </tr>
+                                <%}%>
+
+
                             </tbody>
                         </table>
                     </center>
                 </div>
 
-
+                <% if (nome == null) {%>
                 <div class="col-md-6" style="text-align: justify;">
                     <center>
                         <h3>Melhores Notas</h3>
@@ -138,31 +169,47 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                <%for (Usuario n : BD.getUsuariosList()) {%>
                                 <tr>
-                                    <th scope="row">1</th>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>10</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                    <td>9,5</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">3</th>
-                                    <td>Larry</td>
-                                    <td>the Bird</td>
-                                    <td>9,4</td>
-                                </tr>
+                                    <%int id2 = BD.getUsuariosList().indexOf(n);%>
+                                    <th scope="row"> <%=id2 + 1%> </th>
+                                    <td><%= n.getNome()%></td>
+                                    <td><%= n.getSobrenome()%></td>
+                                    <td><%= nota%></td>
+                                </tr
+                                <%}%>
                             </tbody>
                         </table>
 
                     </center>
                 </div>
+                <%} else if (nome != null) {%>
+                <div class="col-md-6" style="text-align: justify;">
+                    <center>
+                        <h3>Sua média</h3>
+                        <table class="table" style="margin-bottom: 50px;">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">Nome</th>
+                                    <th scope="col">Sobrenome</th>
+                                    <th scope="col">Nota</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
 
 
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+
+                    </center>
+                </div>
+                <%}%>
             </div>
 
             <footer>

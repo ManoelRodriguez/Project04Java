@@ -3,6 +3,8 @@ package org.apache.jsp.pages;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.jsp.*;
+import br.com.fatecpg.project04.BD;
+import br.com.fatecpg.project04.Usuario;
 import br.com.fatecpg.project04.Quiz;
 import br.com.fatecpg.project04.Question;
 
@@ -48,12 +50,16 @@ public final class home_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("\n");
       out.write("\n");
       out.write("\n");
+      out.write("\n");
+      out.write("\n");
       out.write("<!DOCTYPE html>\n");
       out.write("\n");
 
     double grade = 0.0;
     int nota = 0;
     int somanota = 0;
+    int vezes = 0;
+    int tvezes = 0;
     if (request.getParameter("RealizaTeste") != null) {
         for (Question q : Quiz.getMathTest()) {
             if (request.getParameter(q.getPergunta()) != null) {
@@ -61,11 +67,38 @@ public final class home_jsp extends org.apache.jasper.runtime.HttpJspBase
                 if (q.getResposta().equals(userPergunta)) {
                     nota++;
                     somanota += nota;
+                    
+                    
+                    
                 }
             }
         }
+        
+        
+        tvezes = vezes + tvezes; 
         grade = (double) nota / (double) Quiz.getMathTest().size();
+        
+        
     }
+    
+if (request.getParameter("RealizaTeste") != null) {   
+        String nomeu = request.getParameter("nome");
+        String sobrenome = request.getParameter("sobrenome");
+        String email = request.getParameter("email");
+        Usuario novoUsuario = new Usuario();
+        novoUsuario.setNome(nomeu);
+        novoUsuario.setSobrenome(sobrenome);
+        novoUsuario.setEmail(email);
+        BD.getUsuariosList().add(novoUsuario);
+        
+        
+       
+    }
+    
+    
+    String nome = (String) session.getAttribute("nome");
+    
+  
 
       out.write("\n");
       out.write("<html lang=\"pt-br\">\n");
@@ -87,16 +120,31 @@ public final class home_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("                <span class=\"navbar-toggler-icon\"></span>\n");
       out.write("            </button>\n");
       out.write("\n");
-      out.write("            <div class=\"collapse navbar-collapse\" id=\"conteudoNavbarSuportado\">\n");
+      out.write("             <div class=\"collapse navbar-collapse\" id=\"conteudoNavbarSuportado\">\n");
       out.write("                <ul class=\"navbar-nav mr-auto\">\n");
       out.write("                    <li class=\"nav-item active\">\n");
       out.write("                        <a class=\"nav-link\" href=\"home.jsp\">Home <span class=\"sr-only\">(página atual)</span></a>\n");
       out.write("                    </li>\n");
-      out.write("                    <li class=\"nav-item\" style=\"position: absolute; right: 10px;\">\n");
+      out.write("                    <li class=\"nav-item\">\n");
       out.write("                        <a class=\"nav-link\" href=\"identificacao.jsp\">Realizar Teste</a>\n");
       out.write("                    </li>\n");
+      out.write("                    <div id=\"usuario\" style=\"position: absolute; right: 70px;\">\n");
+      out.write("                        <li class=\"nav-item dropdown\">\n");
+      out.write("                            <a class=\"nav-link dropdown-toggle\" href=\"#\" id=\"navbarDropdown\" role=\"button\"\n");
+      out.write("                               data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">\n");
+      out.write("                                ");
+      out.print(nome);
+      out.write("\n");
+      out.write("                            </a>\n");
+      out.write("                            <div class=\"dropdown-menu\" aria-labelledby=\"navbarDropdown\">\n");
+      out.write("                                <a class=\"dropdown-item\" href=\"informacoes.jsp\">Minhas Informações</a>\n");
+      out.write("                                <a class=\"dropdown-item\" href=\"#\">Meus Testes</a>\n");
+      out.write("                                <a class=\"dropdown-item\" href=\"logout.jsp\">Sair</a>\n");
+      out.write("                            </div>\n");
+      out.write("                        </li>\n");
+      out.write("                    </div>\n");
       out.write("                </ul>\n");
-      out.write("            </div>\n");
+      out.write("            </div>  \n");
       out.write("        </nav>\n");
       out.write("        <div class=\"jumbotron\" style=\"height: 350px; padding: 120px;\">\n");
       out.write("            <div class=\"container\">\n");
@@ -153,24 +201,32 @@ if (request.getParameter("RealizaTeste") == null) {
       out.write("                                </tr>\n");
       out.write("                            </thead>\n");
       out.write("                            <tbody>\n");
+      out.write("                                \n");
+      out.write("                                ");
+for (Usuario u : BD.getUsuariosList()){
+      out.write("\n");
       out.write("                                <tr>\n");
-      out.write("                                    <th scope=\"row\">1</th>\n");
-      out.write("                                    <td>Mark</td>\n");
-      out.write("                                    <td>Otto</td>\n");
-      out.write("                                    <td>3</td>\n");
+      out.write("                                    ");
+ int id = BD.getUsuariosList().indexOf(u);
+      out.write("\n");
+      out.write("                                    <th scope=\"row\"> ");
+      out.print(id+1);
+      out.write(" </th>\n");
+      out.write("                                    <td>");
+      out.print( u.getNome() );
+      out.write("</td>\n");
+      out.write("                                    <td>");
+      out.print( u.getSobrenome() );
+      out.write("</td>\n");
+      out.write("                                    <td>");
+      out.print( nota );
+      out.write("</td>\n");
       out.write("                                </tr>\n");
-      out.write("                                <tr>\n");
-      out.write("                                    <th scope=\"row\">2</th>\n");
-      out.write("                                    <td>Jacob</td>\n");
-      out.write("                                    <td>Thornton</td>\n");
-      out.write("                                    <td>8</td>\n");
-      out.write("                                </tr>\n");
-      out.write("                                <tr>\n");
-      out.write("                                    <th scope=\"row\">3</th>\n");
-      out.write("                                    <td>Larry</td>\n");
-      out.write("                                    <td>the Bird</td>\n");
-      out.write("                                    <td>6,8</td>\n");
-      out.write("                                </tr>\n");
+      out.write("                                ");
+}
+      out.write("\n");
+      out.write("                                \n");
+      out.write("                                \n");
       out.write("                            </tbody>\n");
       out.write("                        </table>\n");
       out.write("                    </center>\n");
@@ -190,27 +246,32 @@ if (request.getParameter("RealizaTeste") == null) {
       out.write("                                </tr>\n");
       out.write("                            </thead>\n");
       out.write("                            <tbody>\n");
+      out.write("                                ");
+for (Usuario n : BD.getUsuariosList()){
+      out.write("\n");
       out.write("                                <tr>\n");
-      out.write("                                    <th scope=\"row\">1</th>\n");
-      out.write("                                    <td>Mark</td>\n");
-      out.write("                                    <td>Otto</td>\n");
-      out.write("                                    <td>10</td>\n");
-      out.write("                                </tr>\n");
-      out.write("                                <tr>\n");
-      out.write("                                    <th scope=\"row\">2</th>\n");
-      out.write("                                    <td>Jacob</td>\n");
-      out.write("                                    <td>Thornton</td>\n");
-      out.write("                                    <td>9,5</td>\n");
-      out.write("                                </tr>\n");
-      out.write("                                <tr>\n");
-      out.write("                                    <th scope=\"row\">3</th>\n");
-      out.write("                                    <td>Larry</td>\n");
-      out.write("                                    <td>the Bird</td>\n");
-      out.write("                                    <td>9,4</td>\n");
-      out.write("                                </tr>\n");
+      out.write("                                    ");
+int id2 = BD.getUsuariosList().indexOf(n);
+      out.write("\n");
+      out.write("                                    <th scope=\"row\"> ");
+      out.print(id2+1);
+      out.write(" </th>\n");
+      out.write("                                    <td>");
+      out.print( n.getNome() );
+      out.write("</td>\n");
+      out.write("                                    <td>");
+      out.print( n.getSobrenome() );
+      out.write("</td>\n");
+      out.write("                                    <td>");
+      out.print( nota);
+      out.write("</td>\n");
+      out.write("                                </tr\n");
+      out.write("                                ");
+}
+      out.write("\n");
       out.write("                            </tbody>\n");
       out.write("                        </table>\n");
-      out.write("\n");
+      out.write("                                \n");
       out.write("                    </center>\n");
       out.write("                </div>\n");
       out.write("\n");

@@ -11,6 +11,7 @@
 
 <%
     String nome = (String) session.getAttribute("nome");
+    
     if (nome == null) {
         response.sendRedirect("identificacao.jsp");
     }
@@ -55,7 +56,7 @@
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand" href="home.jsp">Teste Online</a>
+            <a class="navbar-brand" href="#">Teste Online</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#conteudoNavbarSuportado"
                     aria-controls="conteudoNavbarSuportado" aria-expanded="false" aria-label="Alterna navegação">
                 <span class="navbar-toggler-icon"></span>
@@ -64,10 +65,10 @@
             <div class="collapse navbar-collapse" id="conteudoNavbarSuportado">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="home.jsp">Home <span class="sr-only">(página atual)</span></a>
+                        <a class="nav-link" href="#">Home <span class="sr-only">(página atual)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="identificacao.jsp">Realizar Teste</a>
+                        <a class="nav-link" href="#">Realizar Teste</a>
                     </li>
                     <div id="usuario" style="position: absolute; right: 70px;">
                         <li class="nav-item dropdown">
@@ -76,9 +77,7 @@
                                 <%=nome%>
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="#">Minhas Informações</a>
-                                <a class="dropdown-item" href="#">Meus Testes</a>
-                                <a class="dropdown-item" href="logout.jsp">Sair</a>
+                                <a class="dropdown-item" href="#">Sair</a>
                             </div>
                         </li>
                     </div>
@@ -113,8 +112,19 @@
                                 <%}%>
 
                                 <hr/>
-
+                                <input type="text" name="nome" placeholder="Nome" required class="form-control"><br>
+                                <input type="text" name="sobrenome" placeholder="Sobrenome" required class="form-control"
+                                       <br>
                                 <br> <input class="btn btn-primary" type="submit" name="RealizaTeste" value="Enviar"/>
+                                    <%
+                                        String confirma = request.getParameter("confirma");
+            
+            
+                                      if (confirma != null) {
+                                      session.setAttribute("confirma", confirma);
+                                        response.sendRedirect("resultados.jsp");
+            }
+                                    %>
                                 <br>
                                 <br>
                             </form>

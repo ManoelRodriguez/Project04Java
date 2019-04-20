@@ -12,29 +12,29 @@ public class BD {
      public static ArrayList<Usuario> getUsuariosList(){
          if(usuariosList == null){
              usuariosList = new ArrayList<>();
-             Usuario u1 = new Usuario();
-             u1.setNome("Manoel");
-             u1.setSobrenome("Rodriguez");
-             u1.setEmail("manoel@gmail.com");
-             u1.setMedia(0);
-             usuariosList.add(u1);
-             
-             Usuario u2 = new Usuario();
-             u2.setNome("Matheus");
-             u2.setSobrenome("Morais");
-             u2.setEmail("matheus@gmail.com");
-             u2.setMedia(0);
-             usuariosList.add(u2);
-             
-             Usuario u3 = new Usuario();
-             u3.setNome("Wagner");
-             u3.setSobrenome("Alves");
-             u3.setEmail("wagner@gmail.com");
-             u3.setMedia(0);
-             usuariosList.add(u3);
+            Usuario u = new Usuario();
+            u.setNome("Matheus");
+            u.setSobrenome("Morais");
+            u.setEmail("teste@teste.com");
+
+            usuariosList.add(u);
              
              
          }
          return usuariosList;
      }
+     private static ArrayList<Usuario> notasList;
+
+    public static ArrayList<Usuario> getNotasList() {
+        if (notasList == null) {
+            notasList = new ArrayList<>();
+            Usuario n = new Usuario();
+            n.setNome("Matheus");
+            n.setSobrenome("Morais");
+            n.setEmail("teste@yahoo.com");
+            notasList.add(n);
+
+        }
+        return notasList;
+    }
 }
