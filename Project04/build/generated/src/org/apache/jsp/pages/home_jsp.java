@@ -3,6 +3,7 @@ package org.apache.jsp.pages;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.jsp.*;
+import java.util.Collections;
 import br.com.fatecpg.project04.BD;
 import br.com.fatecpg.project04.Usuario;
 import br.com.fatecpg.project04.Quiz;
@@ -52,14 +53,14 @@ public final class home_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("\n");
       out.write("\n");
       out.write("\n");
+      out.write("\n");
       out.write("<!DOCTYPE html>\n");
       out.write("\n");
 
     double grade = 0.0;
     int nota = 0;
     int somanota = 0;
-    int vezes = 0;
-    int tvezes = 0;
+
     if (request.getParameter("RealizaTeste") != null) {
         for (Question q : Quiz.getMathTest()) {
             if (request.getParameter(q.getPergunta()) != null) {
@@ -68,20 +69,22 @@ public final class home_jsp extends org.apache.jasper.runtime.HttpJspBase
                     nota++;
                     somanota += nota;
                     
-                    
-                    
                 }
             }
         }
         
+        Usuario mostranota = new Usuario();
+        mostranota.setNota(nota);
         
-        tvezes = vezes + tvezes; 
         grade = (double) nota / (double) Quiz.getMathTest().size();
+        
         
         
     }
     
-if (request.getParameter("RealizaTeste") != null) {   
+    
+
+    if (request.getParameter("RealizaTeste") != null) {
         String nomeu = request.getParameter("nome");
         String sobrenome = request.getParameter("sobrenome");
         String email = request.getParameter("email");
@@ -90,15 +93,12 @@ if (request.getParameter("RealizaTeste") != null) {
         novoUsuario.setSobrenome(sobrenome);
         novoUsuario.setEmail(email);
         BD.getUsuariosList().add(novoUsuario);
-        
-        
-       
+
     }
-    
-    
+
     String nome = (String) session.getAttribute("nome");
-    
-  
+
+
 
       out.write("\n");
       out.write("<html lang=\"pt-br\">\n");
@@ -120,7 +120,7 @@ if (request.getParameter("RealizaTeste") != null) {
       out.write("                <span class=\"navbar-toggler-icon\"></span>\n");
       out.write("            </button>\n");
       out.write("\n");
-      out.write("             <div class=\"collapse navbar-collapse\" id=\"conteudoNavbarSuportado\">\n");
+      out.write("            <div class=\"collapse navbar-collapse\" id=\"conteudoNavbarSuportado\">\n");
       out.write("                <ul class=\"navbar-nav mr-auto\">\n");
       out.write("                    <li class=\"nav-item active\">\n");
       out.write("                        <a class=\"nav-link\" href=\"home.jsp\">Home <span class=\"sr-only\">(página atual)</span></a>\n");
@@ -128,6 +128,9 @@ if (request.getParameter("RealizaTeste") != null) {
       out.write("                    <li class=\"nav-item\">\n");
       out.write("                        <a class=\"nav-link\" href=\"identificacao.jsp\">Realizar Teste</a>\n");
       out.write("                    </li>\n");
+      out.write("                    ");
+ if (nome != null) {
+      out.write("\n");
       out.write("                    <div id=\"usuario\" style=\"position: absolute; right: 70px;\">\n");
       out.write("                        <li class=\"nav-item dropdown\">\n");
       out.write("                            <a class=\"nav-link dropdown-toggle\" href=\"#\" id=\"navbarDropdown\" role=\"button\"\n");
@@ -137,14 +140,17 @@ if (request.getParameter("RealizaTeste") != null) {
       out.write("\n");
       out.write("                            </a>\n");
       out.write("                            <div class=\"dropdown-menu\" aria-labelledby=\"navbarDropdown\">\n");
-      out.write("                                <a class=\"dropdown-item\" href=\"informacoes.jsp\">Minhas Informações</a>\n");
-      out.write("                                <a class=\"dropdown-item\" href=\"#\">Meus Testes</a>\n");
+      out.write("\n");
       out.write("                                <a class=\"dropdown-item\" href=\"logout.jsp\">Sair</a>\n");
       out.write("                            </div>\n");
       out.write("                        </li>\n");
       out.write("                    </div>\n");
+      out.write("\n");
       out.write("                </ul>\n");
       out.write("            </div>  \n");
+      out.write("            ");
+}
+      out.write("\n");
       out.write("        </nav>\n");
       out.write("        <div class=\"jumbotron\" style=\"height: 350px; padding: 120px;\">\n");
       out.write("            <div class=\"container\">\n");
@@ -171,8 +177,9 @@ if (request.getParameter("RealizaTeste") == null) {
       out.write("</u>\n");
       out.write("                        % das questões.\n");
       out.write("                        Nota: ");
-      out.print( nota);
+      out.print( nota );
       out.write("\n");
+      out.write("                        \n");
       out.write("                    </h2>\n");
       out.write("                    <h3><a href=\"teste.jsp\" style=\"color: #000000\">Realizar novamente o Quiz.</a></h3>\n");
       out.write("                    ");
@@ -200,38 +207,53 @@ if (request.getParameter("RealizaTeste") == null) {
       out.write("                                    <th scope=\"col\">Nota</th>\n");
       out.write("                                </tr>\n");
       out.write("                            </thead>\n");
-      out.write("                            <tbody>\n");
-      out.write("                                \n");
-      out.write("                                ");
-for (Usuario u : BD.getUsuariosList()){
+      out.write("                            <tbody> \n");
+      out.write("                               ");
+ int id = 0;  
       out.write("\n");
+      out.write("                                ");
+ Collections.reverse(BD.getUsuariosList());
+      out.write("\n");
+      out.write("                                ");
+for (Usuario u : BD.getUsuariosList()) {
+      out.write("\n");
+      out.write("                                \n");
       out.write("                                <tr>\n");
       out.write("                                    ");
- int id = BD.getUsuariosList().indexOf(u);
+ if ( id > 8 ) break; 
+      out.write("\n");
+      out.write("                                    ");
+  id = BD.getUsuariosList().indexOf(u);
       out.write("\n");
       out.write("                                    <th scope=\"row\"> ");
       out.print(id+1);
       out.write(" </th>\n");
       out.write("                                    <td>");
-      out.print( u.getNome() );
+      out.print( u.getNome());
       out.write("</td>\n");
       out.write("                                    <td>");
-      out.print( u.getSobrenome() );
+      out.print( u.getSobrenome());
       out.write("</td>\n");
       out.write("                                    <td>");
-      out.print( nota );
+      out.print( u.getNota() );
       out.write("</td>\n");
       out.write("                                </tr>\n");
+      out.write("                                \n");
       out.write("                                ");
 }
       out.write("\n");
       out.write("                                \n");
-      out.write("                                \n");
+      out.write("\n");
       out.write("                            </tbody>\n");
       out.write("                        </table>\n");
+      out.write("                                ");
+ Collections.reverse(BD.getUsuariosList());
+      out.write("\n");
       out.write("                    </center>\n");
       out.write("                </div>\n");
       out.write("\n");
+      out.write("                ");
+ if (nome == null) {
       out.write("\n");
       out.write("                <div class=\"col-md-6\" style=\"text-align: justify;\">\n");
       out.write("                    <center>\n");
@@ -247,20 +269,20 @@ for (Usuario u : BD.getUsuariosList()){
       out.write("                            </thead>\n");
       out.write("                            <tbody>\n");
       out.write("                                ");
-for (Usuario n : BD.getUsuariosList()){
+for (Usuario n : BD.getUsuariosList()) {
       out.write("\n");
       out.write("                                <tr>\n");
       out.write("                                    ");
 int id2 = BD.getUsuariosList().indexOf(n);
       out.write("\n");
-      out.write("                                    <th scope=\"row\"> ");
-      out.print(id2+1);
+      out.write("                                    <th scope=\"row\" > ");
+      out.print(id2 + 1);
       out.write(" </th>\n");
       out.write("                                    <td>");
-      out.print( n.getNome() );
+      out.print( n.getNome());
       out.write("</td>\n");
       out.write("                                    <td>");
-      out.print( n.getSobrenome() );
+      out.print( n.getSobrenome());
       out.write("</td>\n");
       out.write("                                    <td>");
       out.print( nota);
@@ -271,10 +293,39 @@ int id2 = BD.getUsuariosList().indexOf(n);
       out.write("\n");
       out.write("                            </tbody>\n");
       out.write("                        </table>\n");
-      out.write("                                \n");
+      out.write("\n");
       out.write("                    </center>\n");
       out.write("                </div>\n");
+      out.write("                ");
+} else if (nome != null) {
       out.write("\n");
+      out.write("                <div class=\"col-md-6\" style=\"text-align: justify;\">\n");
+      out.write("                    <center>\n");
+      out.write("                        <h3>Sua média</h3>\n");
+      out.write("                        <table class=\"table\" style=\"margin-bottom: 50px;\">\n");
+      out.write("                            <thead class=\"thead-dark\">\n");
+      out.write("                                <tr>\n");
+      out.write("                                    <th scope=\"col\">Nome</th>\n");
+      out.write("                                    <th scope=\"col\">Sobrenome</th>\n");
+      out.write("                                    <th scope=\"col\">Nota</th>\n");
+      out.write("                                </tr>\n");
+      out.write("                            </thead>\n");
+      out.write("                            <tbody>\n");
+      out.write("                                <tr>\n");
+      out.write("\n");
+      out.write("\n");
+      out.write("                                    <td>-</td>\n");
+      out.write("                                    <td>-</td>\n");
+      out.write("                                    <td>-</td>\n");
+      out.write("                                </tr>\n");
+      out.write("\n");
+      out.write("                            </tbody>\n");
+      out.write("                        </table>\n");
+      out.write("\n");
+      out.write("                    </center>\n");
+      out.write("                </div>\n");
+      out.write("                ");
+}
       out.write("\n");
       out.write("            </div>\n");
       out.write("\n");

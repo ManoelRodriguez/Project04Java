@@ -119,11 +119,9 @@
                                     <%
                                         String confirma = request.getParameter("confirma");
             
+                                        
+                                      
             
-                                      if (confirma != null) {
-                                      session.setAttribute("confirma", confirma);
-                                        response.sendRedirect("resultados.jsp");
-            }
                                     %>
                                 <br>
                                 <br>

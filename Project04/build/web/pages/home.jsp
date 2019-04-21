@@ -4,6 +4,7 @@
     Author     : Manoel Rodriguez
 --%>
 
+<%@page import="java.util.Collections"%>
 <%@page import="br.com.fatecpg.project04.BD"%>
 <%@page import="br.com.fatecpg.project04.Usuario"%>
 <%@page import="br.com.fatecpg.project04.Quiz"%>
@@ -23,14 +24,21 @@
                 if (q.getResposta().equals(userPergunta)) {
                     nota++;
                     somanota += nota;
-
+                    
                 }
             }
         }
-
+        
+        Usuario mostranota = new Usuario();
+        mostranota.setNota(nota);
+        
         grade = (double) nota / (double) Quiz.getMathTest().size();
-
+        
+        
+        
     }
+    
+    
 
     if (request.getParameter("RealizaTeste") != null) {
         String nomeu = request.getParameter("nome");
@@ -111,7 +119,8 @@
                     <h2>Você acertou
                         <u> <%=(grade * 100)%></u>
                         % das questões.
-                        Nota: <%= nota%>
+                        Nota: <%= nota %>
+                        
                     </h2>
                     <h3><a href="teste.jsp" style="color: #000000">Realizar novamente o Quiz.</a></h3>
                     <%}%>
@@ -137,21 +146,26 @@
                                     <th scope="col">Nota</th>
                                 </tr>
                             </thead>
-                            <tbody>
-
+                            <tbody> 
+                               <% int id = 0;  %>
+                                <% Collections.reverse(BD.getUsuariosList());%>
                                 <%for (Usuario u : BD.getUsuariosList()) {%>
+                                
                                 <tr>
-                                    <% int id = BD.getUsuariosList().indexOf(u);%>
-                                    <th scope="row"> <%=id + 1%> </th>
+                                    <% if ( id > 8 ) break; %>
+                                    <%  id = BD.getUsuariosList().indexOf(u);%>
+                                    <th scope="row"> <%=id+1%> </th>
                                     <td><%= u.getNome()%></td>
                                     <td><%= u.getSobrenome()%></td>
-                                    <td><%= nota%></td>
+                                    <td><%= u.getNota() %></td>
                                 </tr>
+                                
                                 <%}%>
-
+                                
 
                             </tbody>
                         </table>
+                                <% Collections.reverse(BD.getUsuariosList());%>
                     </center>
                 </div>
 
@@ -172,7 +186,7 @@
                                 <%for (Usuario n : BD.getUsuariosList()) {%>
                                 <tr>
                                     <%int id2 = BD.getUsuariosList().indexOf(n);%>
-                                    <th scope="row"> <%=id2 + 1%> </th>
+                                    <th scope="row" > <%=id2 + 1%> </th>
                                     <td><%= n.getNome()%></td>
                                     <td><%= n.getSobrenome()%></td>
                                     <td><%= nota%></td>
