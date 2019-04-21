@@ -4,9 +4,11 @@
     Author     : Manoel Rodriguez
 --%>
 
+<%@page import="br.com.fatecpg.project04.BD"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-<%
+<%  
+    BD.removeUsuarioList();
     session.invalidate();
     response.sendRedirect("identificacao.jsp");
 %>

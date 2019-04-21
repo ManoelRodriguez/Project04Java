@@ -43,18 +43,26 @@
     if (request.getParameter("RealizaTeste") != null) {
         String nomeu = request.getParameter("nome");
         String sobrenome = request.getParameter("sobrenome");
+        String peganota = request.getParameter("nota");
         String email = request.getParameter("email");
         Usuario novoUsuario = new Usuario();
         novoUsuario.setNome(nomeu);
         novoUsuario.setSobrenome(sobrenome);
+        novoUsuario.setNota(nota);
         novoUsuario.setEmail(email);
         BD.getUsuariosList().add(novoUsuario);
+        BD.getUsuariosLogadosList().add(novoUsuario);
+        
+        
 
     }
 
     String nome = (String) session.getAttribute("nome");
 
+    
+ 
 
+    
 %>
 <html lang="pt-br">
 
@@ -80,9 +88,11 @@
                     <li class="nav-item active">
                         <a class="nav-link" href="home.jsp">Home <span class="sr-only">(página atual)</span></a>
                     </li>
+                    <% if (nome == null) {%>
                     <li class="nav-item">
-                        <a class="nav-link" href="identificacao.jsp">Realizar Teste</a>
+                        <a class="nav-link" href="identificacao.jsp">Login</a>
                     </li>
+                    <%}%>
                     <% if (nome != null) {%>
                     <div id="usuario" style="position: absolute; right: 70px;">
                         <li class="nav-item dropdown">
@@ -91,14 +101,17 @@
                                 <%=nome%>
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-
+                                
                                 <a class="dropdown-item" href="logout.jsp">Sair</a>
                             </div>
+                            
+                    </div>
                         </li>
                     </div>
 
                 </ul>
             </div>  
+            <a class="navbar-brand" href="teste.jsp" style="position: absolute; right: 150px;" >Realizar Teste</a>
             <%}%>
         </nav>
         <div class="jumbotron" style="height: 350px; padding: 120px;">
@@ -130,8 +143,80 @@
             </div>
         </div
 
-
+    <% if (nome == null) {%>
         <div class="container">
+            <div class="row">
+
+                <div class="col-md-6" style="text-align: justify;">
+                    <center>
+                        <h3>Ultimos Testes Realizados</h3>
+                        <table class="table"  style="margin-bottom: 50px;">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">N°</th>
+                                    <th scope="col">Nome</th>
+                                    <th scope="col">Sobrenome</th>
+                                    <th scope="col">Nota</th>
+                                </tr>
+                            </thead>
+                            <tbody> 
+                               <% int id = 0;  %>
+                                <% Collections.reverse(BD.getUsuariosList());%>
+                                <%for (Usuario u : BD.getUsuariosList()) {%>
+                                
+                                <tr>
+                                    <% if ( id > 8 ) break; %>
+                                    <%  id = BD.getUsuariosList().indexOf(u);%>
+                                    <th scope="row"> <%=id+1%> </th>
+                                    <td><%= u.getNome()%></td>
+                                    <td><%= u.getSobrenome()%></td>
+                                    <td><%= u.getNota() %></td>
+                                    
+                                </tr>
+                                
+                                <%}%>
+                                
+
+                            </tbody>
+                        </table>
+                                <% Collections.reverse(BD.getUsuariosList());%>
+                    </center>
+                </div>  
+
+                
+                <div class="col-md-6" style="text-align: justify;">
+                    <center>
+                        <h3>Melhores Notas</h3>
+                        <table class="table" style="margin-bottom: 50px;">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">N°</th>
+                                    <th scope="col">Nome</th>
+                                    <th scope="col">Sobrenome</th>
+                                    <th scope="col">Nota</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <%for (Usuario n : BD.ordenaUsuariosList()) {%>
+                                <tr>
+                                    <%int id2 = BD.ordenaUsuariosList().indexOf(n) ;%>
+                                    
+                                    <th scope="row" > <%=id2 + 1%> </th>
+                                    <td><%= n.getNome()%></td>
+                                    <td><%= n.getSobrenome()%></td>
+                                    <td><%= n.getNota() %></td>
+                                </tr>
+                                <%}%>
+                            </tbody>
+                            
+                        </table>
+
+                    </center>
+                </div>
+                            
+                <%} else if (nome != null) {%>
+                
+                < <div class="container">
             <div class="row">
 
                 <div class="col-md-6" style="text-align: justify;">
@@ -168,9 +253,49 @@
                                 <% Collections.reverse(BD.getUsuariosList());%>
                     </center>
                 </div>
+                </div>
+                    
+                    
+                    
 
-                <% if (nome == null) {%>
                 <div class="col-md-6" style="text-align: justify;">
+                    <center>
+                        <h3>Ultimos Testes Realizados do Usuário </h3>
+                        <table class="table"  style="margin-bottom: 50px;">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">N°</th>
+                                    <th scope="col">Nome</th>
+                                    <th scope="col">Sobrenome</th>
+                                    <th scope="col">Nota</th>
+                                </tr>
+                            </thead>
+                            <tbody> 
+                               <% int id3 = 0;  %>
+                                
+                                <%for (Usuario l : BD.getUsuariosLogadosList()) {%>
+                                
+                                <tr>
+                                    <% if ( id3 > 8 ) break; %>
+                                    <%  id3 = BD.getUsuariosLogadosList().indexOf(l);%>
+                                    <th scope="row"> <%=id3+1%> </th>
+                                    <td><%= l.getNome()%></td>
+                                    <td><%= l.getSobrenome()%></td>
+                                    <td><%= l.getNota() %></td>
+                                </tr>
+                                
+                                <%}%>
+                                
+
+                            </tbody>
+                        </table>
+                                
+                    </center>
+                </div>
+                </div>
+                    
+                    
+                    <div class="col-md-6" style="text-align: justify;">
                     <center>
                         <h3>Melhores Notas</h3>
                         <table class="table" style="margin-bottom: 50px;">
@@ -183,13 +308,13 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <%for (Usuario n : BD.getUsuariosList()) {%>
+                                <%for (Usuario n : BD.ordenaUsuariosList()) {%>
                                 <tr>
-                                    <%int id2 = BD.getUsuariosList().indexOf(n);%>
+                                    <%int id2 = BD.ordenaUsuariosList().indexOf(n); %>
                                     <th scope="row" > <%=id2 + 1%> </th>
                                     <td><%= n.getNome()%></td>
                                     <td><%= n.getSobrenome()%></td>
-                                    <td><%= nota%></td>
+                                    <td><%= n.getNota() %></td>
                                 </tr
                                 <%}%>
                             </tbody>
@@ -197,7 +322,8 @@
 
                     </center>
                 </div>
-                <%} else if (nome != null) {%>
+                </div>
+                
                 <div class="col-md-6" style="text-align: justify;">
                     <center>
                         <h3>Sua média</h3>
@@ -213,9 +339,9 @@
                                 <tr>
 
 
-                                    <td>-</td>
-                                    <td>-</td>
-                                    <td>-</td>
+                                    <td> </td>
+                                    <td> </td>
+                                    <td> </td>
                                 </tr>
 
                             </tbody>
@@ -224,8 +350,11 @@
                     </center>
                 </div>
                 <%}%>
-            </div>
-
+        </div> 
+          
+               
+        </div>
+               
             <footer>
 
                 <hr>

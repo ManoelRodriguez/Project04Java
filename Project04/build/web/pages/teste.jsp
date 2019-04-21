@@ -113,16 +113,10 @@
 
                                 <hr/>
                                 <input type="text" name="nome" placeholder="Nome" required class="form-control"><br>
-                                <input type="text" name="sobrenome" placeholder="Sobrenome" required class="form-control"
-                                       <br>
+                                <input type="text" name="sobrenome" placeholder="Sobrenome" required class="form-control"><br>
+                                <input type="text" name="nota" placeholder="Quantas questões você acha que acertou?" required class="form-control"><br>
                                 <br> <input class="btn btn-primary" type="submit" name="RealizaTeste" value="Enviar"/>
-                                    <%
-                                        String confirma = request.getParameter("confirma");
-            
-                                        
-                                      
-            
-                                    %>
+                                    
                                 <br>
                                 <br>
                             </form>
