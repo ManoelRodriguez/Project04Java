@@ -11,7 +11,7 @@
     String teste = (String) session.getAttribute("nome");
     
     if (teste  != null ) {
-        response.sendRedirect("teste.jsp");
+        response.sendRedirect("home.jsp");
     }
 %>
 
