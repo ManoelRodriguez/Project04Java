@@ -9,7 +9,8 @@
 
 <%
     String teste = (String) session.getAttribute("nome");
-    if (teste != null) {
+    
+    if (teste  != null ) {
         response.sendRedirect("teste.jsp");
     }
 %>
@@ -26,6 +27,7 @@
     </head>
 
     <body>
+                    
 
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <a class="navbar-brand" href="home.jsp">Teste Online</a>
@@ -48,22 +50,23 @@
     <center>
         <div id="identificacao" style="width: 300px; height: 200px; margin-top: 100px;">
             <h4 style="margin-bottom: 40px">Identificação de Usuário</h4>
-            <form action="identificacao.jsp">
+                <form action="identificacao.jsp">
                 <input type="text" name="nome" placeholder="Nome" required class="form-control" style="margin: 15px">
                 <input type="text" name="sobrenome" placeholder="Sobrenome" required class="form-control"
                        style="margin: 15px">
                 <input type="email" name="email" placeholder="E-mail" required class="form-control"
                        style="margin: 15px">
                 <button type="submit" name="iniciar" class="btn btn-primary">Iniciar</button>
+                
             </form>
         </div>
         <%
             String nome = request.getParameter("nome");
             String sobrenome = request.getParameter("sobrenome");
-
+            
             if (nome != null && sobrenome != null && !nome.isEmpty() && !sobrenome.isEmpty()) {
                 session.setAttribute("nome", nome);
-                response.sendRedirect("teste.jsp");
+                response.sendRedirect("home.jsp");
             }
         %>
     </center>
